@@ -1,0 +1,57 @@
+[
+  {
+    "id": "M001",
+    "name": "Amoxicillin",
+    "brand": "GlaxoSmithKline",
+    "price": 12.5,
+    "image": "https://res.cloudinary.com/dnrzantvj/image/upload/v1782759072/Amoxicillin_on95t1.png",
+    "description": "Antibiotic for bacterial infections",
+    "stock": 143,
+    "createdAt": "2026-06-24T20:32:56.143Z",
+    "updatedAt": "2026-06-29T19:43:43.914Z"
+  },
+  {
+    "id": "M002",
+    "name": "Cetirizine",
+    "brand": "Zyrtec",
+    "price": 8.2,
+    "image": "https://res.cloudinary.com/dnrzantvj/image/upload/v1782760524/Cetirizine_ep4cvl.png",
+    "description": "Antihistamine for allergies",
+    "stock": 198,
+    "createdAt": "2026-06-24T20:32:56.144Z",
+    "updatedAt": "2026-06-24T21:16:58.952Z"
+  },
+  {
+    "id": "M003",
+    "name": "Metformin",
+    "brand": "Merck",
+    "price": 15.75,
+    "image": "https://res.cloudinary.com/dnrzantvj/image/upload/v1782760792/Metformin_ztklac.png",
+    "description": "Diabetes medication",
+    "stock": 119,
+    "createdAt": "2026-06-24T20:32:56.144Z",
+    "updatedAt": "2026-06-24T20:35:23.443Z"
+  },
+  {
+    "id": "M004",
+    "name": "Omeprazole",
+    "brand": "AstraZeneca",
+    "price": 22.3,
+    "image": "https://res.cloudinary.com/dnrzantvj/image/upload/v1782762038/Omeprazole_2_pmmqtx.png",
+    "description": "Proton pump inhibitor",
+    "stock": 80,
+    "createdAt": "2026-06-24T20:32:56.144Z",
+    "updatedAt": "2026-06-24T20:32:56.144Z"
+  },
+  {
+    "id": "M005",
+    "name": "Paracetamol",
+    "brand": "Tylenol",
+    "price": 5.9,
+    "image": "https://res.cloudinary.com/dnrzantvj/image/upload/v1782761817/Paracetamol_xpuazk.png",
+    "description": "Pain reliever and fever reducer",
+    "stock": 300,
+    "createdAt": "2026-06-24T20:32:56.144Z",
+    "updatedAt": "2026-06-24T20:32:56.144Z"
+  }
+]

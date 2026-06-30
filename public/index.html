@@ -1,0 +1,2222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediCare · Premium Medicine Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg-primary: #f4f7fb;
+            --bg-secondary: #ffffff;
+            --navy-900: #0b1f3a;
+            --navy-800: #122a4d;
+            --navy-700: #1a3a63;
+            --teal-500: #14b8a6;
+            --teal-400: #2dd4bf;
+            --cyan-500: #06b6d4;
+            --blue-500: #3b82f6;
+            --blue-600: #2563eb;
+            --indigo-500: #6366f1;
+            --text-primary: #0b1f3a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+            --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.04);
+            --shadow-xl: 0 24px 48px rgba(15, 23, 42, 0.12);
+            --shadow-glow: 0 8px 32px rgba(20, 184, 166, 0.25);
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --gradient-primary: linear-gradient(135deg, #0b1f3a 0%, #1a3a63 50%, #14b8a6 130%);
+            --gradient-accent: linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%);
+            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #f97316 0%, #f43f5e 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #f43f5e 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-primary);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%);
+            min-height: 100vh;
+            padding: 24px;
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+        .app-container { max-width: 1440px; margin: 0 auto; }
+
+        /* ============ NAVBAR ============ */
+        .nav-bar {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius-lg);
+            padding: 14px 22px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            position: sticky;
+            top: 16px;
+            z-index: 100;
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--navy-900);
+            letter-spacing: -0.5px;
+        }
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+            box-shadow: var(--shadow-glow);
+            position: relative;
+            overflow: hidden;
+        }
+        .brand-mark::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        .nav-brand:hover .brand-mark::before { transform: translateX(100%); }
+
+        .nav-links { display: flex; gap: 6px; background: rgba(241, 245, 249, 0.6); padding: 5px; border-radius: 14px; }
+        .nav-links button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            background: transparent;
+            position: relative;
+        }
+        .nav-links button.active {
+            background: #fff;
+            color: var(--navy-900);
+            box-shadow: var(--shadow-sm), 0 0 0 1px rgba(20, 184, 166, 0.1);
+        }
+        .nav-links button.active i { color: var(--teal-500); }
+        .nav-links button:not(.active):hover {
+            color: var(--navy-900);
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ============ HERO HEADER ============ */
+        .header {
+            background: var(--gradient-primary);
+            border-radius: var(--radius-xl);
+            padding: 32px 40px;
+            margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+            box-shadow: 0 20px 50px rgba(11, 31, 58, 0.25);
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(20, 184, 166, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: 20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -20px) scale(1.1); }
+        }
+        .header-left { display: flex; align-items: center; gap: 18px; position: relative; z-index: 1; }
+        .header-left .logo {
+            width: 56px;
+            height: 56px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: #fff;
+            backdrop-filter: blur(10px);
+        }
+        .header-left .title-tag {
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+        .header-left h1 {
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.8px;
+            line-height: 1.1;
+        }
+        .header-left h1 span {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header-right { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; position: relative; z-index: 1; }
+        .header-stats {
+            display: flex;
+            gap: 28px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 14px 24px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+        .stat-item { color: #fff; text-align: center; min-width: 60px; }
+        .stat-item .number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+        }
+        .stat-item .label {
+            font-size: 11px;
+            opacity: 0.75;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            display: block;
+        }
+        .header-actions { display: flex; gap: 10px; }
+
+        /* ============ BUTTONS ============ */
+        .btn-primary, .btn-secondary, .btn-success, .btn-danger, .btn-print {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .btn-primary { background: var(--gradient-accent); color: #fff; box-shadow: var(--shadow-glow); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(20, 184, 166, 0.4); }
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.25);
+            backdrop-filter: blur(10px);
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.25); transform: translateY(-2px); }
+        .btn-success { background: var(--gradient-success); color: #fff; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3); }
+        .btn-success:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(16, 185, 129, 0.45); }
+        .btn-danger { background: var(--gradient-danger); color: #fff; box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25); }
+        .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(239, 68, 68, 0.4); }
+        .btn-print { background: rgba(15, 23, 42, 0.7); color: #fff; }
+        .btn-print:hover { background: rgba(15, 23, 42, 0.9); transform: translateY(-2px); }
+
+        /* ============ PAGES ============ */
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============ MAIN LAYOUT ============ */
+        .main-layout { display: grid; grid-template-columns: 1fr 380px; gap: 24px; }
+        @media (max-width: 1100px) { .main-layout { grid-template-columns: 1fr; } }
+
+        /* ============ TOOLBAR ============ */
+        .toolbar {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            padding: 18px 22px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+        }
+        .search-box {
+            flex: 1;
+            min-width: 220px;
+            display: flex;
+            align-items: center;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 0 0 0 16px;
+            border: 2px solid transparent;
+            transition: all 0.25s;
+        }
+        .search-box:focus-within {
+            border-color: var(--teal-500);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+        }
+        .search-box i { color: var(--text-muted); font-size: 14px; }
+        .search-box input {
+            border: none;
+            background: transparent;
+            padding: 12px 14px;
+            font-size: 14px;
+            width: 100%;
+            outline: none;
+            font-family: inherit;
+            color: var(--text-primary);
+        }
+        .search-box button {
+            background: var(--gradient-accent);
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: inherit;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 4px;
+        }
+        .search-box button:hover { transform: scale(1.02); box-shadow: var(--shadow-glow); }
+        .toolbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .toolbar-actions select {
+            padding: 10px 36px 10px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            font-weight: 500;
+            background: #fff;
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%2364748b" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 14px;
+            transition: all 0.25s;
+            color: var(--text-primary);
+        }
+        .toolbar-actions select:focus { border-color: var(--teal-500); }
+        .btn-reset {
+            background: transparent;
+            border: 2px solid var(--border);
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+        }
+        .btn-reset:hover { background: #f8fafc; border-color: var(--teal-500); color: var(--teal-500); }
+
+        /* ============ TABLE ============ */
+        .table-container {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th {
+            text-align: left;
+            padding: 16px 22px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        td {
+            padding: 16px 22px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-primary);
+            vertical-align: middle;
+        }
+        tbody tr { transition: background 0.2s; }
+        tbody tr:hover td { background: #fafdff; }
+        tbody tr:last-child td { border-bottom: none; }
+        .medicine-img {
+            width: 52px;
+            height: 52px;
+            object-fit:fill;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid var(--border);
+            display: block;
+            transition: transform 0.3s;
+        }
+        .medicine-img:hover { transform: scale(1.1) rotate(-3deg); }
+        .img-placeholder {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--teal-500);
+            font-size: 22px;
+            border: 1px solid var(--border);
+        }
+        .badge-id {
+            background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+            color: #0e7490;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            display: inline-block;
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(14, 116, 144, 0.15);
+        }
+        .price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: var(--navy-900);
+            font-size: 16px;
+        }
+        .stock-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .stock-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+        .stock-high { background: #d1fae5; color: #047857; }
+        .stock-medium { background: #fef3c7; color: #b45309; }
+        .stock-low { background: #fee2e2; color: #b91c1c; }
+        .action-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            position: relative;
+        }
+        .btn-icon.edit { background: #eff6ff; color: var(--blue-500); }
+        .btn-icon.edit:hover { background: var(--blue-500); color: #fff; transform: translateY(-2px); box-shadow: 0 6px 14px rgba(59, 130, 246, 0.35); }
+        .btn-icon.delete { background: #fef2f2; color: #ef4444; }
+        .btn-icon.delete:hover { background: #ef4444; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 14px rgba(239, 68, 68, 0.35); }
+        .btn-icon.view { background: #f0fdfa; color: var(--teal-500); }
+        .btn-icon.view:hover { background: var(--teal-500); color: #fff; transform: translateY(-2px); box-shadow: 0 6px 14px rgba(20, 184, 166, 0.35); }
+        .btn-icon.cart { background: #f0fdfa; color: var(--teal-500); }
+        .btn-icon.cart:hover { background: var(--teal-500); color: #fff; transform: translateY(-2px); box-shadow: 0 6px 14px rgba(20, 184, 166, 0.35); }
+        .btn-icon.cart.in-cart { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #fff; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35); }
+        .btn-icon.cart.in-cart:hover { transform: translateY(-2px) scale(1.05); }
+        .empty-row td {
+            padding: 80px 20px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+        .empty-row i { font-size: 56px; display: block; margin-bottom: 18px; color: #cbd5e1; }
+        .empty-row strong { display: block; font-size: 16px; color: var(--text-secondary); margin-bottom: 6px; }
+
+        /* ============ CART SIDEBAR ============ */
+        .cart-sidebar {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 22px;
+            position: sticky;
+            top: 100px;
+            max-height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-light);
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-light);
+        }
+        .cart-header h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            color: var(--navy-900);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cart-header h3 i { color: var(--teal-500); }
+        .cart-header .cart-count {
+            background: var(--gradient-accent);
+            color: #fff;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            box-shadow: var(--shadow-glow);
+        }
+        .cart-customer {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-light);
+        }
+        .cart-customer .customer-field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .cart-customer .customer-field:last-child { margin-bottom: 0; }
+        .cart-customer .customer-field i { color: var(--text-muted); width: 18px; font-size: 14px; }
+        .cart-customer .customer-field input {
+            flex: 1;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 9px 12px;
+            font-size: 13px;
+            font-family: inherit;
+            transition: all 0.25s;
+            background: #fff;
+        }
+        .cart-customer .customer-field input:focus {
+            border-color: var(--teal-500);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+        }
+        .cart-items { flex: 1; overflow-y: auto; margin-bottom: 16px; max-height: 320px; padding-right: 4px; }
+        .cart-items::-webkit-scrollbar { width: 6px; }
+        .cart-items::-webkit-scrollbar-track { background: transparent; }
+        .cart-items::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        .cart-items::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        .cart-item:last-child { border-bottom: none; }
+        .cart-item-info { flex: 1; min-width: 0; }
+        .cart-item-name { font-weight: 600; font-size: 14px; color: var(--navy-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .cart-item-brand { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+        .cart-item-price { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--navy-900); font-size: 14px; }
+        .cart-item-actions { display: flex; align-items: center; gap: 8px; }
+        .cart-item-qty {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 3px;
+        }
+        .cart-item-qty button {
+            width: 22px;
+            height: 22px;
+            border: none;
+            border-radius: 6px;
+            background: #fff;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        .cart-item-qty button:hover { background: var(--teal-500); color: #fff; }
+        .cart-item-qty span { min-width: 22px; text-align: center; font-weight: 700; font-size: 13px; font-family: 'Space Grotesk', sans-serif; }
+        .cart-item-remove { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 14px; padding: 4px; transition: all 0.2s; }
+        .cart-item-remove:hover { transform: scale(1.2); }
+        .cart-empty { text-align: center; color: var(--text-muted); padding: 40px 0; }
+        .cart-empty i { font-size: 44px; display: block; margin-bottom: 12px; color: #cbd5e1; }
+        .cart-empty p { font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; }
+        .cart-footer { border-top: 2px solid var(--border-light); padding-top: 16px; }
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .cart-total span:last-child {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+        .cart-actions { display: flex; gap: 8px; }
+        .cart-actions button { flex: 1; justify-content: center; padding: 12px; }
+        .cart-actions .btn-icon-small { flex: 0 0 auto; width: 44px; padding: 12px; }
+
+        /* ============ MODALS ============ */
+        .modal-overlay, .customer-detail-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 31, 58, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active, .customer-detail-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+        .modal, .customer-detail-modal {
+            background: #fff;
+            border-radius: var(--radius-xl);
+            max-width: 680px;
+            width: 100%;
+            padding: 36px;
+            box-shadow: var(--shadow-xl);
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 92vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .customer-detail-modal { max-width: 920px; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .modal-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            color: var(--navy-900);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .modal-header h2 i { color: var(--teal-500); }
+        .modal-close {
+            background: #f1f5f9;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            font-size: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close:hover { background: #ef4444; color: #fff; transform: rotate(90deg); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-size: 13px;
+            letter-spacing: 0.2px;
+        }
+        .form-group label .required { color: #ef4444; margin-left: 4px; }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.25s;
+            background: #fafbfc;
+            color: var(--text-primary);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--teal-500);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+            background: #fff;
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px solid var(--border-light);
+        }
+        .btn-cancel {
+            background: #f1f5f9;
+            color: var(--text-secondary);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: inherit;
+        }
+        .btn-cancel:hover { background: var(--border); }
+        .btn-save {
+            background: var(--gradient-accent);
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-glow);
+        }
+        .btn-save:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(20, 184, 166, 0.45); }
+        .btn-save:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        /* ============ IMAGE OPTIONS ============ */
+        .image-option-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 12px;
+        }
+        .image-option-toggle button {
+            flex: 1;
+            padding: 10px 14px;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            background: transparent;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: inherit;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .image-option-toggle button.active {
+            background: #fff;
+            border-color: var(--teal-500);
+            color: var(--teal-500);
+            box-shadow: var(--shadow-sm);
+        }
+        .image-option-toggle button:hover:not(.active) { background: rgba(255,255,255,0.6); }
+        .image-upload-area, .url-input-area { display: none; }
+        .image-upload-area.active, .url-input-area.active { display: block; }
+        .upload-drop-zone {
+            border: 2px dashed #cbd5e1;
+            border-radius: 14px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, #fafbfc 0%, #f1f5f9 100%);
+        }
+        .upload-drop-zone:hover {
+            border-color: var(--teal-500);
+            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+            transform: scale(1.01);
+        }
+        .upload-drop-zone i {
+            font-size: 44px;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .upload-drop-zone p { color: var(--text-primary); font-size: 14px; font-weight: 600; }
+        .upload-drop-zone .hint { color: var(--text-muted); font-size: 12px; margin-top: 6px; font-weight: 400; }
+        .upload-drop-zone input[type="file"] { display: none; }
+        .url-input-area input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.25s;
+            background: #fafbfc;
+        }
+        .url-input-area input:focus {
+            border-color: var(--teal-500);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+            background: #fff;
+        }
+        .url-input-area .url-preview { margin-top: 12px; display: none; }
+        .url-input-area .url-preview img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+        }
+        .url-input-area .url-preview.show { display: block; }
+        .image-preview {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px;
+            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+            border-radius: 14px;
+            border: 1px solid rgba(20, 184, 166, 0.15);
+        }
+        .image-preview img { width: 70px; height: 70px; object-fit: cover; border-radius: 10px; border: 1px solid var(--border); }
+        .image-preview .file-info { flex: 1; font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+        .image-preview .file-info i { margin-right: 8px; color: var(--teal-500); }
+        .image-preview .remove-btn {
+            background: rgba(239, 68, 68, 0.1);
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            transition: all 0.25s;
+        }
+        .image-preview .remove-btn:hover { background: #ef4444; color: #fff; }
+
+        /* ============ CUSTOMER DETAIL ============ */
+        .customer-info-box {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 22px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            border: 1px solid var(--border-light);
+        }
+        .customer-info-box .info-item { display: flex; gap: 10px; align-items: baseline; }
+        .customer-info-box .info-item strong { color: var(--text-primary); min-width: 110px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.3px; }
+        .customer-info-box .info-item span { color: var(--text-secondary); font-weight: 500; }
+        .purchase-history h4 {
+            margin-bottom: 16px;
+            color: var(--navy-900);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .purchase-history h4 i { color: var(--teal-500); }
+        .purchase-history table { font-size: 13px; }
+        .purchase-history th { padding: 10px 14px; font-size: 11px; }
+        .purchase-history td { padding: 12px 14px; }
+        .order-items-detail span {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin: 2px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* ============ TOAST ============ */
+        .toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .toast {
+            padding: 14px 22px;
+            border-radius: 14px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: var(--shadow-lg);
+            animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 280px;
+            max-width: 480px;
+            backdrop-filter: blur(20px);
+        }
+        .toast.success { background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(20, 184, 166, 0.95) 100%); }
+        .toast.error { background: linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, rgba(244, 63, 94, 0.95) 100%); }
+        .toast.info { background: linear-gradient(135deg, rgba(59, 130, 246, 0.95) 0%, rgba(99, 102, 241, 0.95) 100%); }
+        .toast i { font-size: 18px; }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* ============ INVOICE PRINT ============ */
+        .invoice-print { display: none; }
+        @media print {
+            body * { visibility: hidden; }
+            .invoice-print, .invoice-print * { visibility: visible; }
+            .invoice-print {
+                display: block !important;
+                position: fixed;
+                left: 0; top: 0;
+                width: 100%;
+                padding: 40px;
+                background: #fff;
+                z-index: 9999;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+            }
+            .invoice-print .print-header {
+                text-align: center;
+                border-bottom: 3px double var(--navy-900);
+                padding-bottom: 20px;
+                margin-bottom: 24px;
+            }
+            .invoice-print .print-header h2 {
+                font-size: 28px;
+                color: var(--navy-900);
+                font-family: 'Space Grotesk', sans-serif;
+            }
+            .invoice-print .customer-info {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                padding: 18px;
+                background: #f8fafc;
+                border-radius: 10px;
+                margin-bottom: 24px;
+            }
+            .invoice-print .customer-info .label {
+                font-weight: 700;
+                color: var(--navy-900);
+                min-width: 110px;
+                display: inline-block;
+            }
+            .invoice-print table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+            .invoice-print table th {
+                background: var(--navy-900);
+                color: #fff;
+                padding: 12px 16px;
+                text-align: left;
+                font-size: 13px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .invoice-print table td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
+            .invoice-print .total-section { text-align: right; border-top: 2px solid var(--navy-900); padding-top: 18px; }
+            .invoice-print .total-section .total-amount {
+                font-size: 26px;
+                font-weight: 700;
+                color: var(--teal-500);
+                font-family: 'Space Grotesk', sans-serif;
+            }
+            .invoice-print .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 12px; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 14px; }
+            .header { padding: 24px; }
+            .header-left h1 { font-size: 22px; }
+            .header-stats { gap: 18px; padding: 10px 18px; }
+            .stat-item .number { font-size: 20px; }
+            .toolbar { padding: 14px; }
+            .form-row { grid-template-columns: 1fr; }
+            .modal, .customer-detail-modal { padding: 24px; max-width: 100%; }
+            .nav-links button span { display: none; }
+            .cart-sidebar { position: static; max-height: none; }
+            .image-option-toggle { flex-direction: column; }
+            .customer-info-box { grid-template-columns: 1fr; }
+            .nav-bar { position: static; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Navigation -->
+    <div class="nav-bar">
+        <div class="nav-brand">
+            <div class="brand-mark"><i class="fas fa-heart-pulse"></i></div>
+            MediCare
+        </div>
+        <div class="nav-links">
+            <button class="active" onclick="switchPage('medicines')">
+                <i class="fas fa-capsules"></i> <span>Medicines</span>
+            </button>
+            <button onclick="switchPage('customers')">
+                <i class="fas fa-users"></i> <span>Customers</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo"><i class="fas fa-heart-pulse"></i></div>
+            <div>
+                <div class="title-tag">Dashboard</div>
+                <h1 id="pageTitle">Medicine <span>Management</span></h1>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="number" id="totalMedicines">0</span>
+                    <span class="label">Medicines</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number" id="totalCustomers">0</span>
+                    <span class="label">Customers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number" id="totalOrders">0</span>
+                    <span class="label">Orders</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-primary" id="openAddModal">
+                    <i class="fas fa-plus"></i>
+                    <span id="addBtnText">Add Medicine</span>
+                </button>
+                <button class="btn-secondary" id="refreshBtn">
+                    <i class="fas fa-arrows-rotate"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medicines Page -->
+    <div class="page active" id="medicinesPage">
+        <div class="toolbar">
+            <div class="search-box">
+                <i class="fas fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search by name, brand, or ID..." />
+                <button id="searchBtn"><i class="fas fa-arrow-right"></i> Search</button>
+            </div>
+            <div class="toolbar-actions">
+                <select id="sortSelect">
+                    <option value="name">Sort by Name (A-Z)</option>
+                    <option value="nameDesc">Sort by Name (Z-A)</option>
+                    <option value="price">Sort by Price (Low-High)</option>
+                    <option value="priceDesc">Sort by Price (High-Low)</option>
+                    <option value="id">Sort by ID</option>
+                    <option value="stock">Sort by Stock</option>
+                </select>
+                <button class="btn-reset" id="resetBtn"><i class="fas fa-rotate-left"></i> Reset</button>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div class="table-container">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>ID</th>
+                                <th>Medicine</th>
+                                <th>Brand</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="medicineTableBody">
+                            <tr class="empty-row">
+                                <td colspan="7"><i class="fas fa-spinner fa-spin"></i><strong>Loading...</strong>Loading medicines</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Cart Sidebar -->
+            <div class="cart-sidebar">
+                <div class="cart-header">
+                    <h3><i class="fas fa-cart-shopping"></i> Cart</h3>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                
+                <div class="cart-customer">
+                    <div class="customer-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="customerName" placeholder="Customer Name" />
+                    </div>
+                    <div class="customer-field">
+                        <i class="fas fa-phone"></i>
+                        <input type="text" id="customerMobile" placeholder="Mobile Number" />
+                    </div>
+                </div>
+
+                <div class="cart-items" id="cartItems">
+                    <div class="cart-empty">
+                        <i class="fas fa-basket-shopping"></i>
+                        <p>Cart is empty</p>
+                        <small style="color:var(--text-muted);font-size:12px;">Add medicines using the + button</small>
+                    </div>
+                </div>
+
+                <div class="cart-footer">
+                    <div class="cart-total">
+                        <span>Total</span>
+                        <span id="cartTotal">$0.00</span>
+                    </div>
+                    <div class="cart-actions">
+                        <button class="btn-print btn-icon-small" id="printCartBtn" title="Print"><i class="fas fa-print"></i></button>
+                        <button class="btn-danger btn-icon-small" id="clearCartBtn" title="Clear"><i class="fas fa-trash"></i></button>
+                        <button class="btn-success" id="checkoutBtn"><i class="fas fa-check"></i> Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customers Page -->
+    <div class="page" id="customersPage">
+        <div class="toolbar">
+            <div class="search-box">
+                <i class="fas fa-magnifying-glass"></i>
+                <input type="text" id="customerSearchInput" placeholder="Search by name or mobile..." />
+                <button id="customerSearchBtn"><i class="fas fa-arrow-right"></i> Search</button>
+            </div>
+            <div class="toolbar-actions">
+                <button class="btn-reset" id="customerResetBtn"><i class="fas fa-rotate-left"></i> Reset</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Name</th>
+                            <th>Mobile</th>
+                            <th>Total Orders</th>
+                            <th>Total Spent</th>
+                            <th>Last Purchase</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customerTableBody">
+                        <tr class="empty-row">
+                            <td colspan="7"><i class="fas fa-spinner fa-spin"></i><strong>Loading...</strong>Loading customers</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Invoice Print Template -->
+<div class="invoice-print" id="invoicePrint">
+    <div class="print-header">
+        <h2><i class="fas fa-heart-pulse"></i> MediCare Pharmacy</h2>
+        <div style="color:var(--text-muted);">123 Medical Street, City · Phone: (555) 123-4567</div>
+    </div>
+    <div class="customer-info">
+        <div><span class="label">Customer:</span> <span id="printCustomerName">-</span></div>
+        <div><span class="label">Mobile:</span> <span id="printCustomerMobile">-</span></div>
+        <div><span class="label">Date:</span> <span id="printDate">-</span></div>
+        <div><span class="label">Invoice #:</span> <span id="printInvoiceNo">-</span></div>
+    </div>
+    <table>
+        <thead><tr><th>#</th><th>Medicine</th><th>Brand</th><th>Price</th><th>Qty</th><th>Subtotal</th></tr></thead>
+        <tbody id="printItemsBody"></tbody>
+    </table>
+    <div class="total-section">
+        <div>Subtotal: <span id="printSubtotal">$0.00</span></div>
+        <div>Tax (10%): <span id="printTax">$0.00</span></div>
+        <div class="total-amount">TOTAL: <span id="printTotal">$0.00</span></div>
+    </div>
+    <div class="footer">Thank you for your purchase!</div>
+</div>
+
+<!-- Medicine Modal -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modalTitle"><i class="fas fa-plus"></i> Add New Medicine</h2>
+            <button class="modal-close" id="modalClose">&times;</button>
+        </div>
+        <form id="medicineForm" enctype="multipart/form-data">
+            <input type="hidden" id="editId" value="" />
+            
+            <div class="form-group">
+                <label for="formName">Medicine Name <span class="required">*</span></label>
+                <input type="text" id="formName" placeholder="e.g., Amoxicillin" required />
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="formBrand">Brand <span class="required">*</span></label>
+                    <input type="text" id="formBrand" placeholder="e.g., Glaxo" required />
+                </div>
+                <div class="form-group">
+                    <label for="formPrice">Price (USD) <span class="required">*</span></label>
+                    <input type="number" id="formPrice" placeholder="0.00" step="0.01" min="0" required />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="formStock">Stock Quantity</label>
+                <input type="number" id="formStock" placeholder="0" min="0" />
+            </div>
+            
+            <div class="form-group">
+                <label>Medicine Image</label>
+                
+                <div class="image-option-toggle">
+                    <button type="button" id="uploadOptionBtn" class="active">
+                        <i class="fas fa-cloud-arrow-up"></i> Upload from System
+                    </button>
+                    <button type="button" id="urlOptionBtn">
+                        <i class="fas fa-link"></i> Enter URL
+                    </button>
+                </div>
+                
+                <div id="uploadArea" class="image-upload-area active">
+                    <div class="upload-drop-zone" id="dropZone">
+                        <i class="fas fa-cloud-arrow-up"></i>
+                        <p><strong>Click to upload</strong> or drag and drop</p>
+                        <p class="hint">Supported: JPG, PNG, GIF, WebP (Max 5MB)</p>
+                        <input type="file" id="formImageUpload" accept="image/*" />
+                    </div>
+                    <div id="uploadPreview" class="image-preview" style="display:none;">
+                        <img id="uploadPreviewImg" src="" alt="Preview" />
+                        <div class="file-info">
+                            <i class="fas fa-image"></i>
+                            <span id="fileName">No file selected</span>
+                        </div>
+                        <button type="button" class="remove-btn" id="removeUploadBtn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="urlArea" class="url-input-area">
+                    <input type="url" id="formImageUrl" placeholder="https://example.com/medicine.jpg" />
+                    <div id="urlPreview" class="url-preview">
+                        <img id="urlPreviewImg" src="" alt="URL Preview" />
+                        <button type="button" class="remove-btn" id="removeUrlBtn" style="margin-top:8px;">
+                            <i class="fas fa-times"></i> Remove URL
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="formDescription">Description</label>
+                <textarea id="formDescription" placeholder="Brief description..." rows="3"></textarea>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" id="modalCancel">Cancel</button>
+                <button type="submit" class="btn-save">
+                    <i class="fas fa-floppy-disk"></i> Save Medicine
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Customer Detail Modal -->
+<div class="customer-detail-overlay" id="customerDetailOverlay">
+    <div class="customer-detail-modal">
+        <div class="modal-header">
+            <h2><i class="fas fa-user"></i> Customer Details</h2>
+            <button class="modal-close" onclick="closeCustomerDetail()">&times;</button>
+        </div>
+        <div id="customerDetailContent"></div>
+    </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+    // ---------- API Base ----------
+    const API_BASE = '/api/medicines';
+    const CUSTOMER_API_BASE = '/api/customers';
+    const ORDER_API_BASE = '/api/orders';
+
+    // ---------- DOM Refs ----------
+    const medicineTbody = document.getElementById('medicineTableBody');
+    const customerTbody = document.getElementById('customerTableBody');
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const sortSelect = document.getElementById('sortSelect');
+    const resetBtn = document.getElementById('resetBtn');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const customerSearchInput = document.getElementById('customerSearchInput');
+    const customerSearchBtn = document.getElementById('customerSearchBtn');
+    const customerResetBtn = document.getElementById('customerResetBtn');
+
+    const cartItems = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    const customerName = document.getElementById('customerName');
+    const customerMobile = document.getElementById('customerMobile');
+    const clearCartBtn = document.getElementById('clearCartBtn');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const printCartBtn = document.getElementById('printCartBtn');
+
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const modalCancel = document.getElementById('modalCancel');
+    const modalTitle = document.getElementById('modalTitle');
+    const medicineForm = document.getElementById('medicineForm');
+    const editId = document.getElementById('editId');
+    const formName = document.getElementById('formName');
+    const formBrand = document.getElementById('formBrand');
+    const formPrice = document.getElementById('formPrice');
+    const formStock = document.getElementById('formStock');
+    const formDescription = document.getElementById('formDescription');
+    const formImageUpload = document.getElementById('formImageUpload');
+    const formImageUrl = document.getElementById('formImageUrl');
+    const uploadOptionBtn = document.getElementById('uploadOptionBtn');
+    const urlOptionBtn = document.getElementById('urlOptionBtn');
+    const uploadArea = document.getElementById('uploadArea');
+    const urlArea = document.getElementById('urlArea');
+    const dropZone = document.getElementById('dropZone');
+    const uploadPreview = document.getElementById('uploadPreview');
+    const uploadPreviewImg = document.getElementById('uploadPreviewImg');
+    const fileName = document.getElementById('fileName');
+    const removeUploadBtn = document.getElementById('removeUploadBtn');
+    const urlPreview = document.getElementById('urlPreview');
+    const urlPreviewImg = document.getElementById('urlPreviewImg');
+    const removeUrlBtn = document.getElementById('removeUrlBtn');
+
+    const totalMedicines = document.getElementById('totalMedicines');
+    const totalCustomers = document.getElementById('totalCustomers');
+    const totalOrders = document.getElementById('totalOrders');
+
+    // ---------- State ----------
+    let allMedicines = [];
+    let allCustomers = [];
+    let allOrders = [];
+    let searchTerm = '';
+    let sortKey = 'name';
+    let customerSearchTerm = '';
+    let cart = [];
+    let currentImageFile = null;
+    let currentImageUrl = '';
+    let currentImageMode = 'upload';
+
+    // ---------- Animated Counter ----------
+    function animateNumber(el, target) {
+        const start = parseInt(el.textContent) || 0;
+        const duration = 800;
+        const startTime = performance.now();
+        function update(now) {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(start + (target - start) * easeOut);
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    }
+
+    // ---------- Toast ----------
+    function showToast(message, type = 'success') {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        const icons = { success: 'fa-circle-check', error: 'fa-circle-exclamation', info: 'fa-circle-info' };
+        toast.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> <span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(40px)';
+            toast.style.transition = 'all 0.3s';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // ---------- Page Switching ----------
+    window.switchPage = function(page) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+        
+        if (page === 'medicines') {
+            document.getElementById('medicinesPage').classList.add('active');
+            document.querySelector('.nav-links button:first-child').classList.add('active');
+            document.getElementById('pageTitle').innerHTML = 'Medicine <span>Management</span>';
+            document.getElementById('addBtnText').textContent = 'Add Medicine';
+            document.getElementById('openAddModal').onclick = () => openMedicineModal('add');
+            fetchMedicines();
+        } else {
+            document.getElementById('customersPage').classList.add('active');
+            document.querySelector('.nav-links button:last-child').classList.add('active');
+            document.getElementById('pageTitle').innerHTML = 'Customer <span>Management</span>';
+            document.getElementById('addBtnText').textContent = 'Add Customer';
+            document.getElementById('openAddModal').onclick = () => {
+                showToast('Use the cart to add customers with orders', 'info');
+            };
+            fetchCustomers();
+        }
+    };
+
+    // ---------- Image Mode Toggle ----------
+    function setImageMode(mode) {
+        currentImageMode = mode;
+        if (mode === 'upload') {
+            uploadOptionBtn.classList.add('active');
+            urlOptionBtn.classList.remove('active');
+            uploadArea.classList.add('active');
+            urlArea.classList.remove('active');
+            formImageUrl.value = '';
+            urlPreview.classList.remove('show');
+            urlPreviewImg.src = '';
+            currentImageUrl = '';
+        } else {
+            urlOptionBtn.classList.add('active');
+            uploadOptionBtn.classList.remove('active');
+            urlArea.classList.add('active');
+            uploadArea.classList.remove('active');
+            formImageUpload.value = '';
+            currentImageFile = null;
+            uploadPreview.style.display = 'none';
+            uploadPreviewImg.src = '';
+            fileName.textContent = 'No file selected';
+        }
+    }
+
+    uploadOptionBtn.addEventListener('click', () => setImageMode('upload'));
+    urlOptionBtn.addEventListener('click', () => setImageMode('url'));
+
+    // ---------- Upload Preview ----------
+    formImageUpload.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            currentImageFile = file;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                uploadPreviewImg.src = event.target.result;
+                uploadPreview.style.display = 'flex';
+                fileName.textContent = file.name;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    dropZone.addEventListener('click', () => formImageUpload.click());
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = 'var(--teal-500)';
+        dropZone.style.background = 'linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%)';
+    });
+    dropZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#cbd5e1';
+        dropZone.style.background = 'linear-gradient(135deg, #fafbfc 0%, #f1f5f9 100%)';
+    });
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#cbd5e1';
+        dropZone.style.background = 'linear-gradient(135deg, #fafbfc 0%, #f1f5f9 100%)';
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            formImageUpload.files = files;
+            formImageUpload.dispatchEvent(new Event('change'));
+        }
+    });
+
+    removeUploadBtn.addEventListener('click', function() {
+        formImageUpload.value = '';
+        currentImageFile = null;
+        uploadPreview.style.display = 'none';
+        uploadPreviewImg.src = '';
+        fileName.textContent = 'No file selected';
+    });
+
+    // ---------- URL Preview ----------
+    formImageUrl.addEventListener('input', function() {
+        const url = this.value.trim();
+        if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+            urlPreviewImg.src = url;
+            urlPreview.classList.add('show');
+            currentImageUrl = url;
+        } else {
+            urlPreview.classList.remove('show');
+            currentImageUrl = '';
+        }
+    });
+
+    removeUrlBtn.addEventListener('click', function() {
+        formImageUrl.value = '';
+        urlPreview.classList.remove('show');
+        urlPreviewImg.src = '';
+        currentImageUrl = '';
+    });
+
+    // ---------- Print Invoice ----------
+    function printInvoice() {
+        if (cart.length === 0) {
+            showToast('Cart is empty!', 'error');
+            return;
+        }
+        const name = customerName.value.trim() || 'Walk-in Customer';
+        const mobile = customerMobile.value.trim() || 'N/A';
+        const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        const tax = total * 0.10;
+        const grandTotal = total + tax;
+
+        document.getElementById('printCustomerName').textContent = name;
+        document.getElementById('printCustomerMobile').textContent = mobile;
+        document.getElementById('printDate').textContent = new Date().toLocaleString();
+        document.getElementById('printInvoiceNo').textContent = 'INV-' + Date.now().toString().slice(-8);
+
+        let itemsHtml = '';
+        cart.forEach((item, index) => {
+            itemsHtml += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${item.name}</td>
+                    <td>${item.brand}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td>${item.qty}</td>
+                    <td>$${(item.price * item.qty).toFixed(2)}</td>
+                </tr>`;
+        });
+        document.getElementById('printItemsBody').innerHTML = itemsHtml;
+        document.getElementById('printSubtotal').textContent = `$${total.toFixed(2)}`;
+        document.getElementById('printTax').textContent = `$${tax.toFixed(2)}`;
+        document.getElementById('printTotal').textContent = `$${grandTotal.toFixed(2)}`;
+        window.print();
+    }
+
+    // ---------- Cart Functions ----------
+    function addToCart(medicineId) {
+        const medicine = allMedicines.find(m => m.id === medicineId);
+        if (!medicine) return;
+        if (medicine.stock <= 0) { showToast('Out of stock!', 'error'); return; }
+        const existing = cart.find(item => item.id === medicineId);
+        if (existing) {
+            if (existing.qty >= medicine.stock) { showToast('Not enough stock!', 'error'); return; }
+            existing.qty += 1;
+        } else {
+            cart.push({ id: medicine.id, name: medicine.name, brand: medicine.brand, price: medicine.price, image: medicine.image, qty: 1, maxStock: medicine.stock });
+        }
+        updateCartUI();
+        showToast(`${medicine.name} added to cart!`, 'success');
+    }
+
+    function removeFromCart(medicineId) {
+        cart = cart.filter(item => item.id !== medicineId);
+        updateCartUI();
+    }
+
+    function updateCartQty(medicineId, delta) {
+        const item = cart.find(i => i.id === medicineId);
+        if (!item) return;
+        item.qty += delta;
+        if (item.qty <= 0) { removeFromCart(medicineId); return; }
+        if (item.qty > item.maxStock) { item.qty = item.maxStock; showToast('Maximum stock reached', 'info'); }
+        updateCartUI();
+    }
+
+    function clearCart() {
+        if (cart.length === 0) return;
+        if (confirm('Clear all items from cart?')) {
+            cart = [];
+            updateCartUI();
+            showToast('Cart cleared', 'info');
+        }
+    }
+
+    function updateCartUI() {
+        const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        cartCount.textContent = totalItems;
+        cartTotal.textContent = `$${totalPrice.toFixed(2)}`;
+
+        if (cart.length === 0) {
+            cartItems.innerHTML = `
+                <div class="cart-empty">
+                    <i class="fas fa-basket-shopping"></i>
+                    <p>Cart is empty</p>
+                    <small style="color:var(--text-muted);font-size:12px;">Add medicines using the + button</small>
+                </div>`;
+            applyFilterAndSort();
+            return;
+        }
+
+        let html = '';
+        cart.forEach(item => {
+            const imgHtml = item.image && (item.image.startsWith('/uploads/') || item.image.startsWith('http'))
+                ? `<img src="${item.image}" style="width:40px;height:40px;object-fit:cover;border-radius:10px;border:1px solid var(--border);" />`
+                : `<div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);display:flex;align-items:center;justify-content:center;color:var(--teal-500);"><i class="fas fa-pills"></i></div>`;
+
+            html += `
+                <div class="cart-item">
+                    <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+                        ${imgHtml}
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-brand">${item.brand}</div>
+                        </div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="cart-item-qty">
+                            <button onclick="updateQty('${item.id}', -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button onclick="updateQty('${item.id}', 1)">+</button>
+                        </div>
+                        <span class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</span>
+                        <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>`;
+        });
+        cartItems.innerHTML = html;
+        applyFilterAndSort();
+    }
+
+    window.addToCart = addToCart;
+    window.removeFromCart = removeFromCart;
+    window.updateQty = updateCartQty;
+
+    // ---------- Checkout ----------
+    async function checkout() {
+        if (cart.length === 0) { showToast('Cart is empty!', 'error'); return; }
+        const name = customerName.value.trim();
+        const mobile = customerMobile.value.trim();
+        if (!name || !mobile) { showToast('Please enter customer name and mobile number!', 'error'); customerName.focus(); return; }
+        if (!/^[0-9]{10,15}$/.test(mobile)) { showToast('Please enter a valid mobile number (10-15 digits)!', 'error'); customerMobile.focus(); return; }
+
+        const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        try {
+            let customerId;
+            const existingCustomer = allCustomers.find(c => c.mobile === mobile);
+            if (existingCustomer) {
+                customerId = existingCustomer.id;
+                showToast(`Welcome back, ${existingCustomer.name}!`, 'info');
+            } else {
+                const newCustomer = { name, mobile, email: '', address: '' };
+                const customerRes = await fetch(CUSTOMER_API_BASE, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newCustomer)
+                });
+                if (!customerRes.ok) throw new Error(`Failed to create customer: ${await customerRes.text()}`);
+                const customerData = await customerRes.json();
+                customerId = customerData.id;
+                showToast(`New customer ${name} created!`, 'success');
+                await fetchCustomers();
+            }
+
+            const orderData = {
+                customerId,
+                items: cart.map(item => ({ id: item.id, name: item.name, brand: item.brand, price: item.price, qty: item.qty, subtotal: item.price * item.qty })),
+                total,
+                date: new Date().toISOString(),
+                orderId: 'ORD-' + Date.now().toString().slice(-8)
+            };
+
+            const orderRes = await fetch(ORDER_API_BASE, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData)
+            });
+            if (!orderRes.ok) throw new Error(`Failed to create order: ${await orderRes.text()}`);
+
+            for (const item of cart) {
+                const medicine = allMedicines.find(m => m.id === item.id);
+                if (medicine) {
+                    const updatedStock = Math.max(0, medicine.stock - item.qty);
+                    await fetch(`${API_BASE}/${item.id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ ...medicine, stock: updatedStock })
+                    });
+                }
+            }
+
+            setTimeout(() => printInvoice(), 500);
+            showToast(`Order #${orderData.orderId} placed successfully!`, 'success');
+            cart = [];
+            customerName.value = '';
+            customerMobile.value = '';
+            updateCartUI();
+            await fetchMedicines();
+            await fetchCustomers();
+        } catch (err) {
+            console.error('Checkout error:', err);
+            showToast(err.message, 'error');
+        }
+    }
+
+    clearCartBtn.addEventListener('click', clearCart);
+    checkoutBtn.addEventListener('click', checkout);
+    printCartBtn.addEventListener('click', printInvoice);
+
+    // ---------- Medicine CRUD ----------
+    async function fetchMedicines() {
+        try {
+            const res = await fetch(API_BASE);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            allMedicines = await res.json();
+            applyFilterAndSort();
+            updateStats();
+        } catch (err) {
+            medicineTbody.innerHTML = `
+                <tr class="empty-row">
+                    <td colspan="7">
+                        <i class="fas fa-triangle-exclamation" style="color:#ef4444;"></i>
+                        <strong>Failed to load</strong>${err.message}
+                    </td>
+                </tr>`;
+        }
+    }
+
+    function applyFilterAndSort() {
+        let filtered = allMedicines;
+        if (searchTerm.trim() !== '') {
+            const lower = searchTerm.trim().toLowerCase();
+            filtered = filtered.filter(item =>
+                item.id.toLowerCase().includes(lower) ||
+                item.name.toLowerCase().includes(lower) ||
+                item.brand.toLowerCase().includes(lower)
+            );
+        }
+        const sorted = [...filtered];
+        switch (sortKey) {
+            case 'name': sorted.sort((a,b) => a.name.localeCompare(b.name)); break;
+            case 'nameDesc': sorted.sort((a,b) => b.name.localeCompare(a.name)); break;
+            case 'price': sorted.sort((a,b) => a.price - b.price); break;
+            case 'priceDesc': sorted.sort((a,b) => b.price - a.price); break;
+            case 'id': sorted.sort((a,b) => a.id.localeCompare(b.id, undefined, { numeric: true })); break;
+            case 'stock': sorted.sort((a,b) => (a.stock || 0) - (b.stock || 0)); break;
+            default: sorted.sort((a,b) => a.name.localeCompare(b.name));
+        }
+        renderMedicines(sorted);
+    }
+
+    function renderMedicines(items) {
+        if (items.length === 0) {
+            medicineTbody.innerHTML = `<tr class="empty-row"><td colspan="7"><i class="fas fa-box-open"></i><strong>No medicines found</strong>Try adding a new medicine</td></tr>`;
+            return;
+        }
+        let html = '';
+        items.forEach(item => {
+            const isInCart = cart.some(c => c.id === item.id);
+            const imgHtml = item.image && (item.image.startsWith('/uploads/') || item.image.startsWith('http'))
+                ? `<img class="medicine-img" src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'img-placeholder\\'><i class=\\'fas fa-pills\\'></i></div>';">`
+                : `<div class="img-placeholder"><i class="fas fa-pills"></i></div>`;
+            const stock = item.stock || 0;
+            let stockClass = 'stock-high', stockLabel = 'In Stock';
+            if (stock === 0) { stockClass = 'stock-low'; stockLabel = 'Out of Stock'; }
+            else if (stock < 20) { stockClass = 'stock-low'; stockLabel = 'Low Stock'; }
+            else if (stock < 50) { stockClass = 'stock-medium'; stockLabel = 'Medium'; }
+
+            html += `
+                <tr>
+                    <td>${imgHtml}</td>
+                    <td><span class="badge-id">${item.id}</span></td>
+                    <td><strong>${item.name}</strong></td>
+                    <td>${item.brand}</td>
+                    <td class="price">$${item.price.toFixed(2)}</td>
+                    <td><span class="stock-badge ${stockClass}">${stockLabel} (${stock})</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-icon cart ${isInCart ? 'in-cart' : ''}" onclick="addToCart('${item.id}')" title="${isInCart ? 'In Cart' : 'Add to Cart'}">
+                                <i class="fas ${isInCart ? 'fa-check' : 'fa-plus'}"></i>
+                            </button>
+                            <button class="btn-icon edit" onclick="editMedicine('${item.id}')" title="Edit"><i class="fas fa-pen"></i></button>
+                            <button class="btn-icon delete" onclick="deleteMedicine('${item.id}')" title="Delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>`;
+        });
+        medicineTbody.innerHTML = html;
+    }
+
+    window.editMedicine = function(id) {
+        const item = allMedicines.find(m => m.id === id);
+        if (!item) return;
+        modalTitle.innerHTML = '<i class="fas fa-pen"></i> Edit Medicine';
+        editId.value = item.id;
+        formName.value = item.name;
+        formBrand.value = item.brand;
+        formPrice.value = item.price;
+        formStock.value = item.stock || 0;
+        formDescription.value = item.description || '';
+        
+        if (item.image) {
+            if (item.image.startsWith('/uploads/')) {
+                setImageMode('upload');
+                currentImageFile = null;
+                uploadPreviewImg.src = item.image;
+                uploadPreview.style.display = 'flex';
+                fileName.textContent = 'Current image';
+            } else if (item.image.startsWith('http')) {
+                setImageMode('url');
+                formImageUrl.value = item.image;
+                urlPreviewImg.src = item.image;
+                urlPreview.classList.add('show');
+                currentImageUrl = item.image;
+            }
+        } else {
+            setImageMode('upload');
+            uploadPreview.style.display = 'none';
+            formImageUrl.value = '';
+            urlPreview.classList.remove('show');
+        }
+        modalOverlay.classList.add('active');
+    };
+
+    window.deleteMedicine = async function(id) {
+        const item = allMedicines.find(m => m.id === id);
+        if (!item) return;
+        if (cart.some(c => c.id === id)) {
+            if (!confirm(`"${item.name}" is in cart. Remove from cart and delete?`)) return;
+            cart = cart.filter(c => c.id !== id);
+            updateCartUI();
+        }
+        if (!confirm(`Delete "${item.name}"?`)) return;
+        try {
+            const res = await fetch(`${API_BASE}/${id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error('Delete failed');
+            showToast(`${item.name} deleted`, 'info');
+            await fetchMedicines();
+        } catch (err) {
+            showToast(err.message, 'error');
+        }
+    };
+
+    // ---------- Medicine Form ----------
+    medicineForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = editId.value;
+        const formData = new FormData();
+        formData.append('name', formName.value.trim());
+        formData.append('brand', formBrand.value.trim());
+        formData.append('price', formPrice.value);
+        formData.append('stock', formStock.value || 0);
+        formData.append('description', formDescription.value.trim());
+        
+        if (currentImageMode === 'upload') {
+            if (currentImageFile) {
+                formData.append('image', currentImageFile);
+            } else if (uploadPreview.style.display !== 'none' && uploadPreviewImg.src) {
+                const existingImage = uploadPreviewImg.src;
+                if (existingImage.startsWith('/uploads/')) {
+                    formData.append('existingImage', existingImage);
+                }
+            }
+        } else {
+            const url = formImageUrl.value.trim();
+            if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+                formData.append('imageUrl', url);
+            }
+        }
+
+        if (!formData.get('name') || !formData.get('brand') || !formData.get('price')) {
+            showToast('Please fill all required fields.', 'error');
+            return;
+        }
+
+        const saveBtn = document.querySelector('.btn-save');
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+        try {
+            const url = id ? `${API_BASE}/${id}` : API_BASE;
+            const method = id ? 'PUT' : 'POST';
+            const res = await fetch(url, { method, body: formData });
+            const result = await res.json();
+            if (!res.ok) throw new Error(result.error || 'Failed to save');
+            showToast(`${result.name} ${id ? 'updated' : 'added'}!`, 'success');
+            modalOverlay.classList.remove('active');
+            await fetchMedicines();
+            formImageUpload.value = '';
+            currentImageFile = null;
+            uploadPreview.style.display = 'none';
+        } catch (err) {
+            showToast(err.message, 'error');
+        }
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fas fa-floppy-disk"></i> Save Medicine';
+    });
+
+    // ---------- Customer CRUD ----------
+    async function fetchCustomers() {
+        try {
+            const res = await fetch(CUSTOMER_API_BASE);
+            if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
+            allCustomers = await res.json();
+            await fetchOrders();
+            renderCustomers();
+            updateStats();
+        } catch (err) {
+            customerTbody.innerHTML = `
+                <tr class="empty-row">
+                    <td colspan="7">
+                        <i class="fas fa-triangle-exclamation" style="color:#ef4444;"></i>
+                        <strong>Failed to load customers</strong>${err.message}
+                    </td>
+                </tr>`;
+        }
+    }
+
+    async function fetchOrders() {
+        try {
+            const res = await fetch(ORDER_API_BASE);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            allOrders = await res.json();
+        } catch (err) { allOrders = []; }
+    }
+
+    function renderCustomers() {
+        let filtered = allCustomers;
+        if (customerSearchTerm.trim() !== '') {
+            const lower = customerSearchTerm.trim().toLowerCase();
+            filtered = filtered.filter(c => c.name.toLowerCase().includes(lower) || c.mobile.includes(lower));
+        }
+        if (filtered.length === 0) {
+            customerTbody.innerHTML = `<tr class="empty-row"><td colspan="7"><i class="fas fa-users"></i><strong>No customers found</strong>Customers appear after first order</td></tr>`;
+            return;
+        }
+        let html = '';
+        filtered.forEach(customer => {
+            const orders = allOrders.filter(o => o.customerId === customer.id);
+            const totalSpent = orders.reduce((sum, o) => sum + o.total, 0);
+            const lastPurchase = orders.length > 0 ? new Date(orders[orders.length-1].date).toLocaleDateString() : 'Never';
+            html += `
+                <tr>
+                    <td><span class="badge-id">${customer.id}</span></td>
+                    <td><strong>${customer.name}</strong></td>
+                    <td>${customer.mobile}</td>
+                    <td>${orders.length}</td>
+                    <td class="price">$${totalSpent.toFixed(2)}</td>
+                    <td>${lastPurchase}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-icon view" onclick="viewCustomer('${customer.id}')"><i class="fas fa-eye"></i></button>
+                            <button class="btn-icon delete" onclick="deleteCustomer('${customer.id}')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>`;
+        });
+        customerTbody.innerHTML = html;
+    }
+
+    window.viewCustomer = function(id) {
+        const customer = allCustomers.find(c => c.id === id);
+        if (!customer) return;
+        const orders = allOrders.filter(o => o.customerId === id);
+        const totalSpent = orders.reduce((sum, o) => sum + o.total, 0);
+
+        document.getElementById('customerDetailContent').innerHTML = `
+            <div class="customer-info-box">
+                <div class="info-item"><strong>Name:</strong> <span>${customer.name}</span></div>
+                <div class="info-item"><strong>Mobile:</strong> <span>${customer.mobile}</span></div>
+                <div class="info-item"><strong>Email:</strong> <span>${customer.email || 'N/A'}</span></div>
+                <div class="info-item"><strong>Total Spent:</strong> <span class="price">$${totalSpent.toFixed(2)}</span></div>
+                <div class="info-item"><strong>Total Orders:</strong> <span>${orders.length}</span></div>
+                <div class="info-item"><strong>Customer Since:</strong> <span>${new Date(customer.createdAt).toLocaleDateString()}</span></div>
+            </div>
+            <div class="purchase-history">
+                <h4><i class="fas fa-clock-rotate-left"></i> Purchase History</h4>
+                ${orders.length === 0 ? '<p style="color:var(--text-muted);">No purchases yet</p>' : `
+                    <table>
+                        <thead><tr><th>Order ID</th><th>Items</th><th>Total</th><th>Date</th></tr></thead>
+                        <tbody>
+                            ${orders.map(o => `
+                                <tr>
+                                    <td><span class="badge-id">${o.orderId || o.id}</span></td>
+                                    <td>${o.items ? o.items.map(item => `<span>${item.name} (${item.qty}x)</span>`).join('') : 'N/A'}</td>
+                                    <td class="price">$${o.total.toFixed(2)}</td>
+                                    <td>${new Date(o.date).toLocaleDateString()}</td>
+                                </tr>`).join('')}
+                        </tbody>
+                    </table>`}
+            </div>
+            <div style="margin-top:24px;display:flex;gap:10px;">
+                <button onclick="editCustomer('${id}')" class="btn-primary" style="flex:1;justify-content:center;">
+                    <i class="fas fa-pen"></i> Edit Customer
+                </button>
+                <button onclick="closeCustomerDetail()" class="btn-cancel" style="flex:1;justify-content:center;">
+                    Close
+                </button>
+            </div>`;
+        document.getElementById('customerDetailOverlay').classList.add('active');
+    };
+
+    window.closeCustomerDetail = function() {
+        document.getElementById('customerDetailOverlay').classList.remove('active');
+    };
+
+    window.editCustomer = function(id) {
+        const customer = allCustomers.find(c => c.id === id);
+        if (!customer) return;
+        const modalContent = document.getElementById('customerDetailContent');
+        modalContent.innerHTML = `
+            <div style="padding:8px;">
+                <h3 style="margin-bottom:22px;color:var(--navy-900);font-family:'Space Grotesk',sans-serif;font-size:20px;display:flex;align-items:center;gap:10px;">
+                    <i class="fas fa-user-pen" style="color:var(--teal-500);"></i> Edit Customer
+                </h3>
+                
+                <div class="form-group">
+                    <label>Customer Name <span class="required">*</span></label>
+                    <input type="text" id="editCustomerName" value="${customer.name}" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Mobile Number <span class="required">*</span></label>
+                    <input type="text" id="editCustomerMobile" value="${customer.mobile}" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="editCustomerEmail" value="${customer.email || ''}" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea id="editCustomerAddress" rows="2">${customer.address || ''}</textarea>
+                </div>
+                
+                <div style="display:flex;gap:10px;margin-top:24px;">
+                    <button onclick="saveCustomerEdit('${id}')" class="btn-save" style="flex:1;justify-content:center;">
+                        <i class="fas fa-floppy-disk"></i> Save Changes
+                    </button>
+                    <button onclick="cancelCustomerEdit('${id}')" class="btn-cancel" style="flex:1;justify-content:center;">
+                        Cancel
+                    </button>
+                </div>
+            </div>`;
+    };
+
+    window.saveCustomerEdit = async function(id) {
+        const nameInput = document.getElementById('editCustomerName');
+        const mobileInput = document.getElementById('editCustomerMobile');
+        const emailInput = document.getElementById('editCustomerEmail');
+        const addressInput = document.getElementById('editCustomerAddress');
+        
+        if (!nameInput || !mobileInput) { showToast('Error: Form elements not found!', 'error'); return; }
+        const name = nameInput.value.trim();
+        const mobile = mobileInput.value.trim();
+        const email = emailInput ? emailInput.value.trim() : '';
+        const address = addressInput ? addressInput.value.trim() : '';
+
+        if (!name || !mobile) { showToast('Name and Mobile are required!', 'error'); return; }
+        if (!/^[0-9]{10,15}$/.test(mobile)) { showToast('Invalid mobile number! (10-15 digits)', 'error'); return; }
+
+        try {
+            const res = await fetch(`${CUSTOMER_API_BASE}/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, mobile, email, address })
+            });
+            if (!res.ok) { const error = await res.json(); throw new Error(error.error || 'Update failed'); }
+            showToast('Customer updated successfully!', 'success');
+            document.getElementById('customerDetailOverlay').classList.remove('active');
+            await fetchCustomers();
+        } catch (err) {
+            showToast(err.message, 'error');
+        }
+    };
+
+    window.cancelCustomerEdit = function(id) { viewCustomer(id); };
+
+    window.deleteCustomer = async function(id) {
+        const customer = allCustomers.find(c => c.id === id);
+        if (!customer || !confirm(`Delete customer "${customer.name}"?`)) return;
+        try {
+            const res = await fetch(`${CUSTOMER_API_BASE}/${id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error('Delete failed');
+            showToast(`${customer.name} deleted`, 'info');
+            await fetchCustomers();
+        } catch (err) {
+            showToast(err.message, 'error');
+        }
+    };
+
+    // ---------- Medicine Modal ----------
+    function openMedicineModal(mode = 'add') {
+        if (mode === 'add') {
+            modalTitle.innerHTML = '<i class="fas fa-plus"></i> Add New Medicine';
+            editId.value = '';
+            medicineForm.reset();
+            formStock.value = 0;
+            setImageMode('upload');
+            uploadPreview.style.display = 'none';
+            formImageUrl.value = '';
+            urlPreview.classList.remove('show');
+        }
+        modalOverlay.classList.add('active');
+    }
+
+    document.getElementById('openAddModal').onclick = () => {
+        if (document.getElementById('medicinesPage').classList.contains('active')) {
+            openMedicineModal('add');
+        } else {
+            showToast('Use the cart to add customers with orders', 'info');
+        }
+    };
+
+    modalClose.onclick = () => modalOverlay.classList.remove('active');
+    modalCancel.onclick = () => modalOverlay.classList.remove('active');
+    modalOverlay.addEventListener('click', (e) => { if (e.target === e.currentTarget) modalOverlay.classList.remove('active'); });
+    document.getElementById('customerDetailOverlay').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) document.getElementById('customerDetailOverlay').classList.remove('active');
+    });
+
+    searchBtn.addEventListener('click', () => { searchTerm = searchInput.value; applyFilterAndSort(); });
+    searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { searchTerm = searchInput.value; applyFilterAndSort(); } });
+    sortSelect.addEventListener('change', () => { sortKey = sortSelect.value; applyFilterAndSort(); });
+    resetBtn.addEventListener('click', () => { searchInput.value = ''; searchTerm = ''; sortSelect.value = 'name'; sortKey = 'name'; applyFilterAndSort(); });
+
+    customerSearchBtn.addEventListener('click', () => { customerSearchTerm = customerSearchInput.value; renderCustomers(); });
+    customerSearchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { customerSearchTerm = customerSearchInput.value; renderCustomers(); } });
+    customerResetBtn.addEventListener('click', () => { customerSearchInput.value = ''; customerSearchTerm = ''; renderCustomers(); });
+
+    refreshBtn.addEventListener('click', () => {
+        if (document.getElementById('medicinesPage').classList.contains('active')) fetchMedicines();
+        else fetchCustomers();
+        showToast('Refreshed', 'info');
+    });
+
+    function updateStats() {
+        animateNumber(totalMedicines, allMedicines.length);
+        animateNumber(totalCustomers, allCustomers.length);
+        animateNumber(totalOrders, allOrders.length);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            modalOverlay.classList.remove('active');
+            document.getElementById('customerDetailOverlay').classList.remove('active');
+        }
+        if (e.ctrlKey && e.key === 'p') { e.preventDefault(); printInvoice(); }
+    });
+
+    fetchMedicines();
+    fetchCustomers();
+    sortSelect.value = 'name';
+    updateCartUI();
+
+    console.log('MediCare ready ✨');
+</script>
+
+</body>
+</html>

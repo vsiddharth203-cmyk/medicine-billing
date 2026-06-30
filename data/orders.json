@@ -1,0 +1,162 @@
+[
+  {
+    "id": "ORD0001",
+    "orderId": "ORD-28538528",
+    "customerId": "C001",
+    "items": [
+      {
+        "id": "M001",
+        "name": "sd",
+        "brand": "dd",
+        "price": 212,
+        "qty": 1,
+        "subtotal": 212
+      }
+    ],
+    "total": 212,
+    "date": "2026-06-24T19:15:38.528Z",
+    "createdAt": "2026-06-24T19:15:38.531Z"
+  },
+  {
+    "id": "ORD0002",
+    "orderId": "ORD-29322559",
+    "customerId": "C001",
+    "items": [
+      {
+        "id": "M003",
+        "name": "sd",
+        "brand": "dd",
+        "price": 212,
+        "qty": 1,
+        "subtotal": 212
+      }
+    ],
+    "total": 212,
+    "date": "2026-06-24T19:28:42.559Z",
+    "createdAt": "2026-06-24T19:28:42.561Z"
+  },
+  {
+    "id": "ORD0003",
+    "orderId": "ORD-33281558",
+    "customerId": "C001",
+    "items": [
+      {
+        "id": "M001",
+        "name": "Amoxicillin",
+        "brand": "GlaxoSmithKline",
+        "price": 12.5,
+        "qty": 1,
+        "subtotal": 12.5
+      },
+      {
+        "id": "M002",
+        "name": "Cetirizine",
+        "brand": "Zyrtec",
+        "price": 8.2,
+        "qty": 1,
+        "subtotal": 8.2
+      }
+    ],
+    "total": 20.7,
+    "date": "2026-06-24T20:34:41.558Z",
+    "createdAt": "2026-06-24T20:34:41.561Z"
+  },
+  {
+    "id": "ORD0004",
+    "orderId": "ORD-33323427",
+    "customerId": "C001",
+    "items": [
+      {
+        "id": "M003",
+        "name": "Metformin",
+        "brand": "Merck",
+        "price": 15.75,
+        "qty": 1,
+        "subtotal": 15.75
+      }
+    ],
+    "total": 15.75,
+    "date": "2026-06-24T20:35:23.427Z",
+    "createdAt": "2026-06-24T20:35:23.434Z"
+  },
+  {
+    "id": "ORD0005",
+    "orderId": "ORD-35711708",
+    "customerId": "C001",
+    "items": [
+      {
+        "id": "M001",
+        "name": "Amoxicillin",
+        "brand": "GlaxoSmithKline",
+        "price": 12.5,
+        "qty": 1,
+        "subtotal": 12.5
+      }
+    ],
+    "total": 12.5,
+    "date": "2026-06-24T21:15:11.708Z",
+    "createdAt": "2026-06-24T21:15:11.715Z"
+  },
+  {
+    "id": "ORD0006",
+    "orderId": "ORD-35818935",
+    "customerId": "C002",
+    "items": [
+      {
+        "id": "M001",
+        "name": "Amoxicillin",
+        "brand": "GlaxoSmithKline",
+        "price": 12.5,
+        "qty": 1,
+        "subtotal": 12.5
+      },
+      {
+        "id": "M002",
+        "name": "Cetirizine",
+        "brand": "Zyrtec",
+        "price": 8.2,
+        "qty": 1,
+        "subtotal": 8.2
+      }
+    ],
+    "total": 20.7,
+    "date": "2026-06-24T21:16:58.935Z",
+    "createdAt": "2026-06-24T21:16:58.939Z"
+  },
+  {
+    "id": "ORD0007",
+    "orderId": "ORD-56139323",
+    "customerId": "C003",
+    "items": [
+      {
+        "id": "M001",
+        "name": "Amoxicillin",
+        "brand": "GlaxoSmithKline",
+        "price": 12.5,
+        "qty": 3,
+        "subtotal": 37.5
+      }
+    ],
+    "total": 37.5,
+    "date": "2026-06-29T18:02:19.323Z",
+    "createdAt": "2026-06-29T18:02:19.327Z"
+  },
+  {
+    "id": "ORD0008",
+    "orderId": "ORD-62223901",
+    "customerId": "C001",
+    "items": [
+      {
+        "id": "M001",
+        "name": "Amoxicillin",
+        "brand": "GlaxoSmithKline",
+        "price": 12.5,
+        "qty": 1,
+        "subtotal": 12.5
+      }
+    ],
+    "total": 12.5,
+    "date": "2026-06-29T19:43:43.901Z",
+    "createdAt": "2026-06-29T19:43:43.905Z"
+  }
+]

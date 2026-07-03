@@ -1903,60 +1903,76 @@
     };
 
     // ---------- Medicine Form ----------
-    medicineForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const id = editId.value;
-        const formData = new FormData();
-        formData.append('name', formName.value.trim());
-        formData.append('brand', formBrand.value.trim());
-        formData.append('price', formPrice.value);
-        formData.append('stock', formStock.value || 0);
-        formData.append('description', formDescription.value.trim());
+    // ---------- Medicine Form (Vercel Compatible) ----------
+medicineForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const id = editId.value;
+    const formData = {
+        name: formName.value.trim(),
+        brand: formBrand.value.trim(),
+        price: parseFloat(formPrice.value),
+        stock: parseInt(formStock.value) || 0,
+        description: formDescription.value.trim()
+    };
+    
+    // Handle image - always use URL mode for Vercel
+    const imageUrl = formImageUrl.value.trim();
+    if (imageUrl && (imageUrl.startsWith('http://') || imageUrl.startsWith('https://'))) {
+        formData.image = imageUrl;
+        formData.imageUrl = imageUrl;
+    } else if (currentImageFile) {
+        // For Vercel, convert file to base64 or use a placeholder
+        showToast('ℹ️ For Vercel deployment, please use image URLs', 'info');
+        // Use a default image
+        formData.image = 'https://picsum.photos/seed/' + Date.now() + '/80/80';
+        formData.imageUrl = formData.image;
+    } else {
+        formData.image = 'https://picsum.photos/seed/default/80/80';
+        formData.imageUrl = formData.image;
+    }
+
+    if (!formData.name || !formData.brand || isNaN(formData.price)) {
+        showToast('❌ Please fill all required fields.', 'error');
+        return;
+    }
+
+    const saveBtn = document.querySelector('.btn-save');
+    saveBtn.disabled = true;
+    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+    try {
+        const url = id ? `${API_BASE}/${id}` : API_BASE;
+        const method = id ? 'PUT' : 'POST';
         
-        if (currentImageMode === 'upload') {
-            if (currentImageFile) {
-                formData.append('image', currentImageFile);
-            } else if (uploadPreview.style.display !== 'none' && uploadPreviewImg.src) {
-                const existingImage = uploadPreviewImg.src;
-                if (existingImage.startsWith('/uploads/')) {
-                    formData.append('existingImage', existingImage);
-                }
-            }
-        } else {
-            const url = formImageUrl.value.trim();
-            if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
-                formData.append('imageUrl', url);
-            }
+        const res = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        const result = await res.json();
+        
+        if (!res.ok) {
+            throw new Error(result.error || 'Failed to save');
         }
-
-        if (!formData.get('name') || !formData.get('brand') || !formData.get('price')) {
-            showToast('Please fill all required fields.', 'error');
-            return;
-        }
-
-        const saveBtn = document.querySelector('.btn-save');
-        saveBtn.disabled = true;
-        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-
-        try {
-            const url = id ? `${API_BASE}/${id}` : API_BASE;
-            const method = id ? 'PUT' : 'POST';
-            const res = await fetch(url, { method, body: formData });
-            const result = await res.json();
-            if (!res.ok) throw new Error(result.error || 'Failed to save');
-            showToast(`${result.name} ${id ? 'updated' : 'added'}!`, 'success');
-            modalOverlay.classList.remove('active');
-            await fetchMedicines();
-            formImageUpload.value = '';
-            currentImageFile = null;
-            uploadPreview.style.display = 'none';
-        } catch (err) {
-            showToast(err.message, 'error');
-        }
-        saveBtn.disabled = false;
-        saveBtn.innerHTML = '<i class="fas fa-floppy-disk"></i> Save Medicine';
-    });
-
+        
+        showToast(`✅ ${result.name} ${id ? 'updated' : 'added'}!`, 'success');
+        modalOverlay.classList.remove('active');
+        await fetchMedicines();
+        formImageUpload.value = '';
+        currentImageFile = null;
+        uploadPreview.style.display = 'none';
+    } catch (err) {
+        console.error('❌ Error saving medicine:', err);
+        showToast(`❌ ${err.message}`, 'error');
+    }
+    
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Medicine';
+});
     // ---------- Customer CRUD ----------
     async function fetchCustomers() {
         try {

@@ -1,17 +1,14 @@
 {
   "name": "medicine-billing-app",
   "version": "1.0.0",
-  "description": "Medicine Billing Application with Vercel Support",
+  "description": "Medicine Billing Application",
   "main": "api/index.js",
   "scripts": {
-    "start": "node api/index.js",
-    "vercel-build": "echo Building..."
+    "start": "node server.js",
+    "vercel-build": "echo Hello"
   },
   "dependencies": {
     "express": "^4.18.2",
     "cors": "^2.8.5"
-  },
-  "engines": {
-    "node": ">=18.0.0"
   }
 }
